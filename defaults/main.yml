@@ -16,5 +16,7 @@ tinyproxy_filters: []
 tinyproxy_systemd_restriction_enable: true
 tinyproxy_cgroups_restriction_enable: true
 
+tinyproxy_reporting_template: tinyproxy_report.sh
+
 # set system update and environment to proxy for local system
 tinyproxy_local_enable: true
