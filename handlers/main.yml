@@ -1,0 +1,11 @@
+---
+# handlers file for juju4.tinyproxy
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: restart tinyproxy
+  service:
+    name: tinyproxy
+    state: restarted

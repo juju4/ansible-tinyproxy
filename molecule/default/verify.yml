@@ -1,0 +1,29 @@
+---
+
+- name: Verify
+  hosts: tinyproxy
+  gather_facts: false
+  tasks:
+    - name: Gather package facts
+      package_facts:
+        manager: auto
+    - name: Validate that needed packages are present
+      assert:
+        that: ansible_facts.packages['tinyproxy']
+
+    - name: Ensure process is running
+      command: pgrep -u _tinyproxy tinyproxy
+      register: ps
+      changed_when: false
+      ignore_errors: true
+    - name: Validate ps output
+      assert:
+        that: ps.stdout
+
+    - name: Ensure ports are listening
+      wait_for:
+        host: "{{ item.h }}"
+        port: "{{ item.p }}"
+        timeout: 10
+      with_items:
+        - { h: localhost, p: 8888 }

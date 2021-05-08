@@ -1,0 +1,55 @@
+[Service]
+User={{ tinyproxy_user }}
+Group={{ tinyproxy_group }}
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+PrivateNetwork=false
+## NOK
+#PrivateUsers=true
+ProtectHome=true
+ProtectSystem=full
+ProtectClock=true
+#CapabilityBoundingSet=~CAP_SYS_ADMIN CAP_SYS_PTRACE CAP_SETUID CAP_SETGID CAP_SETPCAP CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_NET_ADMIN CAP_SYS_TIME CAP_DAC_* CAP_FOWNER CAP_IPC_OWNER
+CapabilityBoundingSet=~CAP_SYS_ADMIN CAP_SYS_PTRACE CAP_SETUID CAP_SETGID CAP_SETPCAP CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_NET_ADMIN CAP_SYS_TIME CAP_FOWNER CAP_IPC_OWNER CAP_KILL CAP_NET_BIND_SERVICE CAP_NET_BROADCAST CAP_NET_RAW CAP_SYS_NICE CAP_SYS_RESOURCE CAP_SYS_BOOT CAP_LINUX_IMMUTABLE CAP_SYS_CHROOT
+{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
+InaccessiblePaths=/proc
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictNamespaces=~user mnt
+#RestrictNamespaces=~user mnt CLONE_NEWCGROUP CLONE_NEWIPC CLONE_NEWNET CLONE_NEWPID
+RestrictSUIDSGID=true
+LockPersonality=true
+{% endif %}
+RestrictAddressFamilies=AF_INET AF_INET6
+{% if not (ansible_virtualization_type is defined and
+          ansible_virtualization_type == "docker"
+        )
+%}
+{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 8) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 16) %}
+
+{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 8) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
+SystemCallFilter=@default @file-system @basic-io @system-service @signal @io-event @network-io
+#SystemCallFilter=~@debug @mount @cpu-emulation @obsolete @privileged @clock @module @raw-io @reboot @swap
+SystemCallArchitectures=native
+{% endif %}
+# When system call is disallowed, return error code instead of killing process
+SystemCallErrorNumber=EPERM
+{% endif %}
+{% endif %}
+{% if tinyproxy_cgroups_restriction_enable|bool %}
+CPUShares={{ tinyproxy_cgroups_cpushares | default('1024') }}
+CPUQuota={{ tinyproxy_cgroups_cpuquota | default('80%') }}
+MemoryLimit={{ tinyproxy_cgroups_memorylimit | default('4G') }}
+{% endif %}
+MemoryDenyWriteExecute=true
+
+Restart=on-failure
+RestartSec=15s
+
+# Network restrictions (in and out)
+IPAddressAllow={{ tinyproxy_ipaddressallow | default('10.0.0.0/8 192.168.1.0/24 localhost') }}
+#IPAddressDeny=any

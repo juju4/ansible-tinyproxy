@@ -1,0 +1,12 @@
+---
+# tasks file for juju4.tinyproxy
+
+- name: Include version-specific variables for OS family.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- import_tasks: tinyproxy.yml
+
+- import_tasks: reporting.yml
+
+- import_tasks: set-local-proxy.yml
+  when: tinyproxy_local_enable|bool

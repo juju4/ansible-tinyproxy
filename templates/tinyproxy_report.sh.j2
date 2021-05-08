@@ -1,0 +1,25 @@
+#!/bin/sh
+
+date=`date +%Y%m%d`
+f=/var/log/tinyproxy/tinyproxy.log
+echo
+echo
+echo "      TINYPROXY DAILY REPORT $date for $f"
+echo
+echo
+
+echo "** Log Level"
+awk '{ print $1 }' $f | sort | uniq -c | sort -nr
+echo
+
+echo "** Source IP"
+awk '/CONNECT .*: Connect / { print $10 }' $f | sort | uniq -c | sort -nr
+echo
+
+echo "*** Domain"
+awk '/CONNECT .*: Established connection / { print $10 }' $f | sort | uniq -c | sort -nr | head -30
+echo
+
+echo "** Url"
+awk '/CONNECT .*: Request / { print $11 }' $f | sort | uniq -c | sort -nr | head -30
+echo

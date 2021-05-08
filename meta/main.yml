@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  role_name: tinyproxy
+  author: juju4
+  description: tinyproxy setup
+  license: BSD
+  min_ansible_version: 1.9
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+  galaxy_tags:
+    - system
+    - security
+    - proxy
+dependencies: []
