@@ -8,7 +8,7 @@
 
 - name: Ensure reporting script exists
   template:
-    rc: "{{ tinyproxy_reporting_template }}.j2"
+    src: "{{ tinyproxy_reporting_template }}.j2"
     dest: "/usr/local/scripts/{{ tinyproxy_reporting_template | basename }}"
     mode: '0755'
 
