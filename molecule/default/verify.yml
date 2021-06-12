@@ -4,6 +4,8 @@
   hosts: tinyproxy
   gather_facts: false
   tasks:
+    - name: Debug | ansible_virtualization_type
+      debug: var=ansible_virtualization_type verbosity=1
     - name: Gather package facts
       package_facts:
         manager: auto
