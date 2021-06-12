@@ -21,3 +21,4 @@ tinyproxy_reporting_dest: /var/tmp
 
 # set system update and environment to proxy for local system
 tinyproxy_local_enable: true
+tinyproxy_proxy_url: "http://localhost:{{ tinyproxy_port }}"
