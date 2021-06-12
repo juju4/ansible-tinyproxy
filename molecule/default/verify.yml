@@ -2,7 +2,7 @@
 
 - name: Verify
   hosts: tinyproxy
-  gather_facts: false
+  gather_facts: true
   tasks:
     - name: Debug | ansible_virtualization_type
       debug: var=ansible_virtualization_type verbosity=1
