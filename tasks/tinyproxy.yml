@@ -1,5 +1,11 @@
 ---
 
+- name: Debian | update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: "{{ tinyproxy_apt_cache_valid | default('3600') }}"
+  when: ansible_os_family == 'Debian'
+
 - name: Install tinyproxy package
   package:
     name: tinyproxy
