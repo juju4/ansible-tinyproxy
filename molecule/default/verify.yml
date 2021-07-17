@@ -17,7 +17,7 @@
       command: pgrep -u _tinyproxy tinyproxy
       register: ps
       changed_when: false
-      ignore_errors: true
+      failed_when: false
     - name: Validate ps output
       assert:
         that: ps.stdout
