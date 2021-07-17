@@ -228,6 +228,12 @@ MaxRequestsPerChild 0
 # tested against the controls based on order.
 #
 Allow 127.0.0.1
+Allow ::1
+{% if tinyproxy_allow is defined %}
+{% for item in tinyproxy_allow %}
+Allow {{ item }}
+{% endfor %}
+{% endif %}
 
 # BasicAuth: HTTP "Basic Authentication" for accessing the proxy.
 # If there are any entries specified, access is only granted for authenticated
