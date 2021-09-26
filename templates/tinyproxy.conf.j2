@@ -12,8 +12,8 @@
 # as the root user. Either the user or group name or the UID or GID
 # number may be used.
 #
-{% if not (tinyproxy_systemd_restriction_enable|bool and ansible_service_mgr == 'systemd') %}
 User {{ tinyproxy_user }}
+{% if not (tinyproxy_systemd_restriction_enable|bool and ansible_service_mgr == 'systemd') %}
 Group {{ tinyproxy_group }}
 {% endif %}
 
