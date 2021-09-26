@@ -13,8 +13,8 @@
     mode: '0755'
 
 - name: Add tinyproxy report in logrotate
-  lineinfile:  # noqa no-tabs
+  template:
+    src: logrotate-tinyproxy.j2
     dest: /etc/logrotate.d/tinyproxy
-    line: "\t\ttest ! -x /usr/local/scripts/{{ tinyproxy_reporting_template | basename }} || sudo -u proxy /usr/local/scripts/{{ tinyproxy_reporting_template | basename }} 2>&1 | sudo -u proxy tee {{ tinyproxy_reporting_dest }}/squid-report-`date +%Y%m%d` >/dev/null"
-    insertafter: '^\tprerotate$'
     mode: '0644'
+    validate: 'logrotate -dv %s'

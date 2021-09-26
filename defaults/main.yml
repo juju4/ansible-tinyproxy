@@ -16,6 +16,8 @@ tinyproxy_filters: []
 tinyproxy_systemd_restriction_enable: true
 tinyproxy_cgroups_restriction_enable: true
 
+tinyproxy_logrotate_days: 30
+
 tinyproxy_reporting_template: tinyproxy_report.sh
 tinyproxy_reporting_dest: /var/tmp
 

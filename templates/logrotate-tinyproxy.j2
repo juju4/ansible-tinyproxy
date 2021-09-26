@@ -1,0 +1,14 @@
+{{ ansible_managed | comment }}
+/var/log/tinyproxy/tinyproxy.log {
+        rotate {{ tinyproxy_logrotate_days }}
+        daily
+        compress
+        missingok
+        prerotate
+                test ! -x /usr/local/scripts/{{ tinyproxy_reporting_template | basename }} || sudo -u proxy /usr/local/scripts/{{ tinyproxy_reporting_template | basename }} 2>&1 | sudo -u proxy tee {{ tinyproxy_reporting_dest }}/tinyproxy-report-`date +%Y%m%d` >/dev/null"
+        endscript
+        postrotate
+                invoke-rc.d --quiet tinyproxy reload > /dev/null
+        endscript
+        notifempty
+}
