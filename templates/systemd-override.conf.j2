@@ -9,7 +9,7 @@ PrivateNetwork=false
 #PrivateUsers=true
 ProtectHome=true
 ProtectSystem=full
-ProtectClock=true
+#ProtectClock=true
 #CapabilityBoundingSet=~CAP_SYS_ADMIN CAP_SYS_PTRACE CAP_SETUID CAP_SETGID CAP_SETPCAP CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_NET_ADMIN CAP_SYS_TIME CAP_DAC_* CAP_FOWNER CAP_IPC_OWNER
 CapabilityBoundingSet=~CAP_SYS_ADMIN CAP_SYS_PTRACE CAP_SETUID CAP_SETGID CAP_SETPCAP CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_NET_ADMIN CAP_SYS_TIME CAP_FOWNER CAP_IPC_OWNER CAP_KILL CAP_NET_BIND_SERVICE CAP_NET_BROADCAST CAP_NET_RAW CAP_SYS_NICE CAP_SYS_RESOURCE CAP_SYS_BOOT CAP_LINUX_IMMUTABLE CAP_SYS_CHROOT
 {% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
