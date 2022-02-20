@@ -12,6 +12,9 @@ tinyproxy_port: 8888
 tinyproxy_log: '/var/log/tinyproxy/tinyproxy.log'
 tinyproxy_filterdefaultdeny: 'Yes'
 tinyproxy_filters: []
+tinyproxy_xtinyproxyheader: 'No'
+tinyproxy_upstream: []
+# tinyproxy_upstream: [ 'none ".internal.example.com"', 'http upstream.proxy:3128' ]
 
 tinyproxy_systemd_restriction_enable: true
 tinyproxy_cgroups_restriction_enable: true

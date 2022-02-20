@@ -136,7 +136,11 @@ PidFile "{{ tinyproxy_pidfile }}"
 # XTinyproxy: Tell Tinyproxy to include the X-Tinyproxy header, which
 # contains the client's IP address.
 #
+{% if tinyproxy_xtinyproxyheader|string == 'Yes' %}
+XTinyproxy Yes
+{% else %}
 #XTinyproxy Yes
+{% endif %}
 
 #
 # Upstream:
@@ -187,6 +191,11 @@ PidFile "{{ tinyproxy_pidfile }}"
 #  IP/mask  matches network/mask
 #
 #Upstream http some.remote.proxy:port
+{% for line in tinyproxy_upstream %}
+{% if line|string %}
+Upstream {{ line }}
+{% endif %}
+{% endfor %}
 
 #
 # MaxClients: This is the absolute highest number of threads which will
