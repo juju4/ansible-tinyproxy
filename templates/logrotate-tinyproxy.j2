@@ -5,7 +5,7 @@
         compress
         missingok
         prerotate
-                test ! -x /usr/local/scripts/{{ tinyproxy_reporting_template | basename }} || sudo -u proxy /usr/local/scripts/{{ tinyproxy_reporting_template | basename }} 2>&1 | sudo -u proxy tee {{ tinyproxy_reporting_dest }}/tinyproxy-report-`date +%Y%m%d` >/dev/null"
+                test ! -x /usr/local/scripts/{{ tinyproxy_reporting_template | basename }} || sudo -u tinyproxy /usr/local/scripts/{{ tinyproxy_reporting_template | basename }} 2>&1 | sudo -u tinyproxy tee {{ tinyproxy_reporting_dest }}/tinyproxy-report-`date +%Y%m%d` >/dev/null
         endscript
         postrotate
                 invoke-rc.d --quiet tinyproxy reload > /dev/null
