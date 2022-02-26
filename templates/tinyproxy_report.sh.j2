@@ -17,9 +17,21 @@ awk '/CONNECT .*: Connect / { print $10 }' $f | sort | uniq -c | sort -nr
 echo
 
 echo "*** Domain"
-awk '/CONNECT .*: Established connection / { print $10 }' $f | sort | uniq -c | sort -nr | head -30
+awk '/CONNECT .*: Established connection / && !/Established connection to upstream proxy/ { print $10 }' $f | sort | uniq -c | sort -nr | head -30
 echo
 
 echo "** Url"
 awk '/CONNECT .*: Request / { print $11 }' $f | sort | uniq -c | sort -nr | head -30
+echo
+
+echo "*** ERROR"
+sed 's/^ERROR.*\]: //' "${f}" | sort | uniq -c | sort -nr | head -30
+echo
+
+echo "*** WARNING"
+sed 's/^WARNING.*\]: //' "${f}" | sort | uniq -c | sort -nr | head -30
+echo
+
+echo "*** INFO No upstream proxy"
+sed -n 's/^INFO.*\]: No upstream proxy for //p' "${f}" | sort | uniq -c | sort -nr | head -30
 echo
