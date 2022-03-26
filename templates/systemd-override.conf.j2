@@ -1,3 +1,8 @@
+{{ ansible_managed | comment }}
+#
+# /etc/systemd/system/tinyproxy.service.d/override.conf
+#
+# Exposure level: ? -> 5.3
 [Service]
 User={{ tinyproxy_user }}
 Group={{ tinyproxy_group }}
@@ -51,5 +56,5 @@ Restart=on-failure
 RestartSec=15s
 
 # Network restrictions (in and out)
-IPAddressAllow={{ tinyproxy_ipaddressallow | default('10.0.0.0/8 192.168.1.0/24 localhost') }}
+# IPAddressAllow={{ tinyproxy_ipaddressallow | default('10.0.0.0/8 192.168.1.0/24 localhost') }}
 #IPAddressDeny=any
