@@ -15,6 +15,10 @@ tinyproxy_filters: []
 tinyproxy_xtinyproxyheader: 'No'
 tinyproxy_upstream: []
 # tinyproxy_upstream: [ 'none ".internal.example.com"', 'http upstream.proxy:3128' ]
+tinyproxy_maxclients: 100
+tinyproxy_minspareservers: 5
+tinyproxy_maxspareservers: 20
+tinyproxy_startservers: 10
 
 tinyproxy_systemd_restriction_enable: true
 tinyproxy_cgroups_restriction_enable: true

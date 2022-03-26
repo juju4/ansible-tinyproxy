@@ -202,7 +202,7 @@ Upstream {{ line }}
 # be created. In other words, only MaxClients number of clients can be
 # connected at the same time.
 #
-MaxClients 100
+MaxClients {{ tinyproxy_maxclients }}
 
 #
 # MinSpareServers/MaxSpareServers: These settings set the upper and
@@ -212,13 +212,13 @@ MaxClients 100
 # server processes will be spawned.  If the number of servers exceeds
 # MaxSpareServers then the extras will be killed off.
 #
-MinSpareServers 5
-MaxSpareServers 20
+MinSpareServers {{ tinyproxy_minspareservers }}
+MaxSpareServers {{ tinyproxy_maxspareservers }}
 
 #
 # StartServers: The number of servers to start initially.
 #
-StartServers 10
+StartServers {{ tinyproxy_startservers }}
 
 #
 # MaxRequestsPerChild: The number of connections a thread will handle
