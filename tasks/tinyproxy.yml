@@ -1,18 +1,18 @@
 ---
 
 - name: Debian | update apt cache
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: "{{ tinyproxy_apt_cache_valid | default('3600') }}"
   when: ansible_os_family == 'Debian'
 
 - name: Install tinyproxy package
-  package:
+  ansible.builtin.package:
     name: tinyproxy
     state: present
 
 - name: tinyproxy filters
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/tinyproxy/{{ item }}"
     mode: '0644'
@@ -21,7 +21,7 @@
     - restart tinyproxy
 
 - name: tinyproxy configuration
-  template:
+  ansible.builtin.template:
     src: "{{ tinyproxy_template }}.j2"
     dest: "{{ tinyproxy_conf }}"
     mode: '0644'
@@ -29,7 +29,7 @@
     - restart tinyproxy
 
 - name: Ensure tinyproxy service is enabled
-  service:
+  ansible.builtin.service:
     name: tinyproxy
     enabled: "{{ tinyproxy_service_enable }}"
 
