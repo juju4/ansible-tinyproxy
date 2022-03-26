@@ -25,13 +25,13 @@ awk '/CONNECT .*: Request / { print $11 }' $f | sort | uniq -c | sort -nr | head
 echo
 
 echo "*** ERROR"
-sed 's/^ERROR.*\]: //' "${f}" | sort | uniq -c | sort -nr | head -30
+sed '/^ERROR.*\]: /!d;s/^ERROR.*\]: //' "${f}" | sort | uniq -c | sort -nr | head -30
 echo
 
 echo "*** WARNING"
-sed 's/^WARNING.*\]: //' "${f}" | sort | uniq -c | sort -nr | head -30
+sed '/^WARNING.*\]: /!d;s/^WARNING.*\]: //' "${f}" | sort | uniq -c | sort -nr | head -30
 echo
 
 echo "*** INFO No upstream proxy"
-sed -n 's/^INFO.*\]: No upstream proxy for //p' "${f}" | sort | uniq -c | sort -nr | head -30
+sed -n '/^INFO.*\]: /!d;s/^INFO.*\]: No upstream proxy for //p' "${f}" | sort | uniq -c | sort -nr | head -30
 echo
