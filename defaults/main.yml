@@ -8,7 +8,7 @@ tinyproxy_service_enable: true
 tinyproxy_user: _tinyproxy
 tinyproxy_group: _tinyproxy
 tinyproxy_port: 8888
-#tinyproxy_listen: 192.168.0.1
+# tinyproxy_listen: 192.168.0.1
 tinyproxy_log: '/var/log/tinyproxy/tinyproxy.log'
 tinyproxy_filterdefaultdeny: 'Yes'
 tinyproxy_filters: []
