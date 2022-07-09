@@ -204,6 +204,8 @@ Upstream {{ line }}
 #
 MaxClients {{ tinyproxy_maxclients }}
 
+{% if not (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 22) %}
+{# Obsolete in 1.11 #}
 #
 # MinSpareServers/MaxSpareServers: These settings set the upper and
 # lower limit for the number of spare servers which should be available.
@@ -227,6 +229,7 @@ StartServers {{ tinyproxy_startservers }}
 # leakage, then set this to something like 10000.
 #
 MaxRequestsPerChild 0
+{% endif %}
 
 #
 # Allow: Customization of authorization controls. If there are any
