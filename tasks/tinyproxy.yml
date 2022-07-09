@@ -13,7 +13,7 @@
 
 - name: tinyproxy filters
   ansible.builtin.template:
-    src: "{{ item }}"
+    src: "{{ item }}.j2"
     dest: "/etc/tinyproxy/{{ item }}"
     mode: '0644'
   with_items: "{{ tinyproxy_filters }}"
@@ -32,6 +32,13 @@
   ansible.builtin.service:
     name: tinyproxy
     enabled: "{{ tinyproxy_service_enable }}"
+
+- name: Ensure log directory has right permissions
+  ansible.builtin.file:
+    path: "{{ tinyproxy_log | dirname }}"
+    owner: "{{ tinyproxy_user }}"
+    mode: "0755"
+    state: directory
 
 - import_tasks: systemd.yml
   when: tinyproxy_systemd_restriction_enable|bool and ansible_service_mgr == 'systemd'
