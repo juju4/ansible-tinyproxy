@@ -13,5 +13,5 @@
     dest: /etc/systemd/system/tinyproxy.service.d/override.conf
     mode: '0644'
   notify:
-    - reload systemd
-    - restart tinyproxy
+    - Reload systemd
+    - Restart tinyproxy

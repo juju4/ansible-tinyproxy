@@ -11,22 +11,22 @@
     name: tinyproxy
     state: present
 
-- name: tinyproxy filters
+- name: Tinyproxy filters
   ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "/etc/tinyproxy/{{ item }}"
     mode: '0644'
   with_items: "{{ tinyproxy_filters }}"
   notify:
-    - restart tinyproxy
+    - Restart tinyproxy
 
-- name: tinyproxy configuration
+- name: Tinyproxy configuration
   ansible.builtin.template:
     src: "{{ tinyproxy_template }}.j2"
     dest: "{{ tinyproxy_conf }}"
     mode: '0644'
   notify:
-    - restart tinyproxy
+    - Restart tinyproxy
 
 - name: Ensure tinyproxy service is enabled
   ansible.builtin.service:
@@ -41,4 +41,4 @@
     state: directory
 
 - import_tasks: systemd.yml
-  when: tinyproxy_systemd_restriction_enable|bool and ansible_service_mgr == 'systemd'
+  when: tinyproxy_systemd_restriction_enable | bool and ansible_service_mgr == 'systemd'

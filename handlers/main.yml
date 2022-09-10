@@ -1,7 +1,7 @@
 ---
 # handlers file for juju4.tinyproxy
 
-- name: reload systemd
+- name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: yes
   when: >
@@ -9,7 +9,7 @@
           (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
         )
 
-- name: restart tinyproxy
+- name: Restart tinyproxy
   ansible.builtin.service:
     name: tinyproxy
     state: restarted
