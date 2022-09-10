@@ -10,3 +10,6 @@
 
 - import_tasks: set-local-proxy.yml
   when: tinyproxy_local_enable|bool
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
