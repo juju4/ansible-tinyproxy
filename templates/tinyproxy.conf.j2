@@ -281,7 +281,7 @@ ViaProxyName "tinyproxy"
 #
 {% if tinyproxy_filters is defined %}
 {% for filter in tinyproxy_filters %}
-Filter "/etc/tinyproxy/{{ filter }}"
+Filter "/etc/tinyproxy/{{ filter | basename }}"
 {% endfor %}
 {% endif %}
 

@@ -14,7 +14,7 @@
 - name: Tinyproxy filters
   ansible.builtin.template:
     src: "{{ item }}.j2"
-    dest: "/etc/tinyproxy/{{ item }}"
+    dest: "/etc/tinyproxy/{{ item | basename }}"
     mode: '0644'
   with_items: "{{ tinyproxy_filters }}"
   notify:
