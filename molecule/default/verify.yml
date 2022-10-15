@@ -3,9 +3,17 @@
 - name: Verify
   hosts: tinyproxy
   gather_facts: true
+  pre_tasks:
+    - name: RedHat | Ensure pgrep is present
+      ansible.builtin.package:
+        name: procps-ng
+        state: present
+      when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int >= 8
   tasks:
     - name: Debug | ansible_virtualization_type
-      ansible.builtin.debug: var=ansible_virtualization_type verbosity=1
+      ansible.builtin.debug:
+        var: ansible_virtualization_type
+        verbosity: 1
     - name: Gather package facts
       ansible.builtin.package_facts:
         manager: auto

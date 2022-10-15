@@ -40,5 +40,6 @@
     mode: "0755"
     state: directory
 
-- import_tasks: systemd.yml
+- name: Import systemd
+  ansible.builtin.import_tasks: systemd.yml
   when: tinyproxy_systemd_restriction_enable | bool and ansible_service_mgr == 'systemd'

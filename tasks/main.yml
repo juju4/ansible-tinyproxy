@@ -4,11 +4,14 @@
 - name: Include version-specific variables for OS family.
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
-- import_tasks: tinyproxy.yml
+- name: Import tinyproxy
+  ansible.builtin.import_tasks: tinyproxy.yml
 
-- import_tasks: reporting.yml
+- name: Import reporting
+  ansible.builtin.import_tasks: reporting.yml
 
-- import_tasks: set-local-proxy.yml
+- name: Import set-local-proxy
+  ansible.builtin.import_tasks: set-local-proxy.yml
   when: tinyproxy_local_enable|bool
 
 - name: Flush handlers
