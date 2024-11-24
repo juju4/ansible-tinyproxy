@@ -204,7 +204,7 @@ Upstream {{ line }}
 #
 MaxClients {{ tinyproxy_maxclients }}
 
-{% if not (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 22) %}
+{% if not ((ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 22) or (ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 12)) %}
 {# Obsolete in 1.11 #}
 #
 # MinSpareServers/MaxSpareServers: These settings set the upper and
