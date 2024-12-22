@@ -46,9 +46,9 @@ SystemCallErrorNumber=EPERM
 {% endif %}
 {% endif %}
 {% if tinyproxy_cgroups_restriction_enable|bool %}
-CPUShares={{ tinyproxy_cgroups_cpushares | default('1024') }}
+CPUWeight={{ tinyproxy_cgroups_cpushares | default('1024') }}
 CPUQuota={{ tinyproxy_cgroups_cpuquota | default('80%') }}
-MemoryLimit={{ tinyproxy_cgroups_memorylimit | default('4G') }}
+MemoryMax={{ tinyproxy_cgroups_memorylimit | default('4G') }}
 {% endif %}
 MemoryDenyWriteExecute=true
 
