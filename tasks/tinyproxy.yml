@@ -4,7 +4,7 @@
   ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: "{{ tinyproxy_apt_cache_valid | default('3600') }}"
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Install tinyproxy package
   ansible.builtin.package:
@@ -42,4 +42,4 @@
 
 - name: Import systemd
   ansible.builtin.import_tasks: systemd.yml
-  when: tinyproxy_systemd_restriction_enable | bool and ansible_service_mgr == 'systemd'
+  when: tinyproxy_systemd_restriction_enable | bool and ansible_facts['service_mgr'] == 'systemd'
