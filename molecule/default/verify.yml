@@ -8,11 +8,11 @@
       ansible.builtin.package:
         name: procps-ng
         state: present
-      when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int >= 8
+      when: ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] | int >= 8
   tasks:
-    - name: Debug | ansible_virtualization_type
+    - name: Debug | ansible_facts['virtualization_type']
       ansible.builtin.debug:
-        var: ansible_virtualization_type
+        var: ansible_facts['virtualization_type']
         verbosity: 1
     - name: Gather package facts
       ansible.builtin.package_facts:
@@ -20,7 +20,7 @@
     - name: Validate that needed packages are present
       ansible.builtin.assert:
         that:
-          - ansible_facts.packages['tinyproxy'] is defined
+          - ansible_facts['facts.packages']['tinyproxy'] is defined
 
     - name: Ensure process is running
       ansible.builtin.command: pgrep -u _tinyproxy tinyproxy
@@ -31,8 +31,8 @@
       ansible.builtin.assert:
         that: ps.stdout | length > 0
       when: >
-        not (ansible_virtualization_type is defined and
-              (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
+        not (ansible_facts['virtualization_type'] is defined and
+              (ansible_facts['virtualization_type'] == "docker" or ansible_facts['virtualization_type'] == "containerd")
           )
 
     - name: Ensure ports are listening
@@ -43,6 +43,6 @@
       with_items:
         - { h: localhost, p: 8888 }
       when: >
-        not (ansible_virtualization_type is defined and
-              (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
+        not (ansible_facts['virtualization_type'] is defined and
+              (ansible_facts['virtualization_type'] == "docker" or ansible_facts['virtualization_type'] == "containerd")
           )
