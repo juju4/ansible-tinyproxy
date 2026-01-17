@@ -13,7 +13,7 @@
 # number may be used.
 #
 User {{ tinyproxy_user }}
-{% if not (tinyproxy_systemd_restriction_enable|bool and ansible_service_mgr == 'systemd') %}
+{% if not (tinyproxy_systemd_restriction_enable|bool and ansible_facts['service_mgr'] == 'systemd') %}
 Group {{ tinyproxy_group }}
 {% endif %}
 
@@ -204,7 +204,7 @@ Upstream {{ line }}
 #
 MaxClients {{ tinyproxy_maxclients }}
 
-{% if not ((ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 22) or (ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 12)) %}
+{% if not ((ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version']|int >= 22) or (ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version']|int >= 12)) %}
 {# Obsolete in 1.11 #}
 #
 # MinSpareServers/MaxSpareServers: These settings set the upper and
