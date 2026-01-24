@@ -20,7 +20,7 @@
     - name: Validate that needed packages are present
       ansible.builtin.assert:
         that:
-          - ansible_facts['facts.packages']['tinyproxy'] is defined
+          - ansible_facts.packages['tinyproxy'] is defined
 
     - name: Ensure process is running
       ansible.builtin.command: pgrep -u _tinyproxy tinyproxy
