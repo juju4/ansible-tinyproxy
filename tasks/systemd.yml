@@ -1,17 +1,14 @@
 ---
 
-- name: Ensure override folder exists
-  ansible.builtin.file:
-    dest: /etc/systemd/system/tinyproxy.service.d
-    state: directory
-    mode: '0755'
+- name: Ensure systemd package is present
+  ansible.builtin.package:
+    name: systemd
+    state: present
 
-# if issue, check /var/log/audit/audit.log
-- name: Review tinyproxy systemd options - RestartSec, Seccomp...
-  ansible.builtin.template:
+- name: Include systemd-unit
+  ansible.builtin.include_tasks: systemd-unit.yml
+  vars:
+    dstunit: tinyproxy
+    t: tinyproxy
     src: systemd-override.conf.j2
-    dest: /etc/systemd/system/tinyproxy.service.d/override.conf
-    mode: '0644'
-  notify:
-    - Reload systemd
-    - Restart tinyproxy
+    dest: override.conf

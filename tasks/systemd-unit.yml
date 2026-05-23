@@ -1,0 +1,61 @@
+---
+# vars: dstunit, t, src, dest
+
+- name: Systemd
+  block:
+    - name: Ensure systemd service.d folder exists
+      ansible.builtin.file:
+        dest: "/etc/systemd/system/{{ dstunit | default(t) }}.service.d"
+        state: directory
+        mode: '0755'
+
+    - name: Add systemd hardening options for services
+      ansible.builtin.template:
+        src: "{{ src }}"
+        dest: "/etc/systemd/system/{{ dstunit | default(t) }}.service.d/{{ dest }}"
+        mode: '0644'
+      notify:
+        - Reload systemd
+        - "Restart {{ dstunit }}"
+  rescue:
+    - name: Import immutable
+      ansible.builtin.import_tasks: immutable.yml
+      vars:
+        target_dir: /etc/systemd/system
+        state: pre
+    - name: Import immutable
+      ansible.builtin.import_tasks: immutable.yml
+      vars:
+        target_dir: "/etc/systemd/system/{{ dstunit | default(t) }}.service.d"
+        state: pre
+    - name: Import immutable
+      ansible.builtin.import_tasks: immutable.yml
+      vars:
+        target_dir: "/etc/systemd/system/{{ dstunit | default(t) }}.service.d/{{ dest }}"
+        state: pre
+
+    - name: Ensure systemd service.d folder exists
+      ansible.builtin.file:
+        dest: "/etc/systemd/system/{{ dstunit | default(t) }}.service.d"
+        state: directory
+        mode: '0755'
+
+    - name: Add systemd hardening options for services
+      ansible.builtin.template:
+        src: "{{ src }}"
+        dest: "/etc/systemd/system/{{ dstunit | default(t) }}.service.d/{{ dest }}"
+        mode: '0644'
+      notify:
+        - Reload systemd
+        - "Restart {{ dstunit }}"
+
+    - name: Import immutable
+      ansible.builtin.import_tasks: immutable.yml
+      vars:
+        target_dir: /etc/systemd/system
+        state: post
+    - name: Import immutable
+      ansible.builtin.import_tasks: immutable.yml
+      vars:
+        target_dir: "/etc/systemd/system/{{ dstunit | default(t) }}.service.d/{{ dest }}"
+        state: post
