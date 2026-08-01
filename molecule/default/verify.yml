@@ -3,20 +3,39 @@
 - name: Verify
   hosts: tinyproxy
   gather_facts: true
+  vars:
+    is_container: false
   pre_tasks:
     - name: RedHat | Ensure pgrep is present
       ansible.builtin.package:
         name: procps-ng
         state: present
       when: ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] | int >= 8
-  tasks:
+    - name: Debian | Ensure ps is present
+      ansible.builtin.package:
+        name:
+          - procps
+        state: present
+      when: ansible_os_family == "Debian"
     - name: Debug | ansible_facts['virtualization_type']
       ansible.builtin.debug:
         var: ansible_facts['virtualization_type']
         verbosity: 1
+    - name: Set fact is_container
+      ansible.builtin.set_fact:
+        is_container: true
+      when: >
+        (ansible_virtualization_type is defined and
+          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
+        )
     - name: Gather package facts
       ansible.builtin.package_facts:
         manager: auto
+    - name: RedHat | Set fact is_container
+      ansible.builtin.set_fact:
+        tinyproxy_local_enable: false
+      when: ansible_facts['os_family'] == "RedHat"
+  tasks:
     - name: Validate that needed packages are present
       ansible.builtin.assert:
         that:
@@ -30,10 +49,8 @@
     - name: Validate ps output
       ansible.builtin.assert:
         that: ps.stdout | length > 0
-      when: >
-        not (ansible_facts['virtualization_type'] is defined and
-              (ansible_facts['virtualization_type'] == "docker" or ansible_facts['virtualization_type'] == "containerd")
-          )
+      when:
+        - not is_container|bool
 
     - name: Ensure ports are listening
       ansible.builtin.wait_for:
@@ -42,7 +59,5 @@
         timeout: 10
       with_items:
         - { h: localhost, p: 8888 }
-      when: >
-        not (ansible_facts['virtualization_type'] is defined and
-              (ansible_facts['virtualization_type'] == "docker" or ansible_facts['virtualization_type'] == "containerd")
-          )
+      when:
+        - not is_container|bool
