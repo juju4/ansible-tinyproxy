@@ -32,7 +32,7 @@ jobs:
           - molecule_distro: 'ubuntu:24.04'
             experimental: false
           - molecule_distro: 'debian:13'
-            experimental: true
+            experimental: false
     env:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
       MOLECULE_NO_LOG: "false"
