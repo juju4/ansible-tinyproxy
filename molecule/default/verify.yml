@@ -38,7 +38,7 @@
           - ansible_facts.packages['tinyproxy'] is defined
 
     - name: Ensure process is running
-      ansible.builtin.command: pgrep -u _tinyproxy tinyproxy
+      ansible.builtin.command: pgrep -u tinyproxy tinyproxy
       register: ps
       changed_when: false
       failed_when: false
