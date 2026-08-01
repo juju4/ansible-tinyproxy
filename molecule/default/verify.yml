@@ -16,7 +16,7 @@
         name:
           - procps
         state: present
-      when: ansible_os_family == "Debian"
+      when: ansible_facts['os_family'] == "Debian"
     - name: Debug | ansible_facts['virtualization_type']
       ansible.builtin.debug:
         var: ansible_facts['virtualization_type']
@@ -31,10 +31,6 @@
     - name: Gather package facts
       ansible.builtin.package_facts:
         manager: auto
-    - name: RedHat | Set fact is_container
-      ansible.builtin.set_fact:
-        tinyproxy_local_enable: false
-      when: ansible_facts['os_family'] == "RedHat"
   tasks:
     - name: Validate that needed packages are present
       ansible.builtin.assert:

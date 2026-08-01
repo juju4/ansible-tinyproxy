@@ -27,6 +27,10 @@
       when: >
         (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] | int >= 16) or
         (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] | int >= 8)
+    - name: RedHat | Set fact is_container
+      ansible.builtin.set_fact:
+        tinyproxy_local_enable: false
+      when: ansible_facts['os_family'] == "RedHat"
   roles:
     - { role: juju4.redhat_epel, when: ansible_facts.os_family == "RedHat" }
     - juju4.tinyproxy
