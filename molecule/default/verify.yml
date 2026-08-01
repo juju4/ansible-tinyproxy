@@ -25,8 +25,8 @@
       ansible.builtin.set_fact:
         is_container: true
       when: >
-        (ansible_virtualization_type is defined and
-          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
+        (ansible_facts.virtualization_type is defined and
+          (ansible_facts.virtualization_type == "docker" or ansible_facts.virtualization_type == "containerd")
         )
     - name: Gather package facts
       ansible.builtin.package_facts:
