@@ -32,6 +32,8 @@
   ansible.builtin.service:
     name: tinyproxy
     enabled: "{{ tinyproxy_service_enable }}"
+  when:
+    - (not is_container | bool or ansible_facts['os_family'] != "RedHat")
 
 - name: Ensure log directory has right permissions
   ansible.builtin.file:
