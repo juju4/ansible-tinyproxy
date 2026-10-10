@@ -1,7 +1,7 @@
+# tinyproxy ansible role
+
 [![Actions Status - Main](https://github.com/juju4/ansible-tinyproxy/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-tinyproxy/actions?query=branch%3Amain)
 [![Actions Status - Devel](https://github.com/juju4/ansible-tinyproxy/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-tinyproxy/actions?query=branch%3Adevel)
-
-# tinyproxy ansible role
 
 Setup [tinyproxy](https://tinyproxy.github.io/) - [source](https://github.com/tinyproxy/tinyproxy)
 
